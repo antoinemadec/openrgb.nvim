@@ -16,6 +16,7 @@ class OpenRGBNvim(object):
         self.is_connected = False
         self.connection_failed = False
         self.led_names = []
+        self.prev_vim_mode = ''
         # vim variables
         self.vim.vars['openrgb_connection_failed'] = False
         self.vim.vars['openrgb_led_names'] = []
@@ -106,5 +107,8 @@ class OpenRGBNvim(object):
     @pynvim.function('OpenRGBChangeColorFromMode')
     def change_color_from_mode(self, args):
         vim_mode = args[0]
+        if vim_mode == self.prev_vim_mode:
+            return
+        self.prev_vim_mode = vim_mode
         d = self.mode_dict.get(vim_mode, self.mode_dict['default'])
-        self.change_color([d['vim_color'], d['led_names']])
+        self.change_color([d['vim_color'], d['led_names'], d['led_vim_colors']])
