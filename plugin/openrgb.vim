@@ -3,7 +3,17 @@ if exists('g:loaded_openrgb')
 endif
 let g:loaded_openrgb = 'yes'
 
+
+"--------------------------------------------------------------
+" variables
+"--------------------------------------------------------------
 let g:openrgb_connection_failed = 0
+
+let g:openrgb_is_ready = 0
+augroup OpenRgbNvim
+  autocmd!
+  autocmd VimEnter * call OpenRGBSync() | let g:openrgb_is_ready = 1
+augroup END
 
 if !exists("g:openrgb_mode_dict")
   " default dict

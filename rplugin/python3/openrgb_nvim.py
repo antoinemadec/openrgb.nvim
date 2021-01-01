@@ -72,6 +72,10 @@ class OpenRGBNvim(object):
             self.vim.command(
                 'echom "[vim-openrgb] cannot connect to openrgb server"')
 
+    @pynvim.function('OpenRGBSync', sync=True)
+    def sync(self, args):
+        pass
+
     @pynvim.function('OpenRGBChangeColor')
     def change_color(self, args):
         vim_color = args[0]
