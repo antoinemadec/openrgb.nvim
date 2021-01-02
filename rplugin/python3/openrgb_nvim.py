@@ -17,6 +17,7 @@ class OpenRGBNvim(object):
         self.connection_failed = False
         self.led_names = []
         self.prev_vim_mode = ''
+        self.th_cnt = 0
         # vim variables
         self.vim.vars['openrgb_connection_failed'] = False
         self.vim.vars['openrgb_led_names'] = []
@@ -78,6 +79,8 @@ class OpenRGBNvim(object):
 
     @pynvim.function('OpenRGBChangeColor')
     def change_color(self, args):
+        self.th_cnt += 1
+        my_th_cnt = self.th_cnt
         vim_color = args[0]
         led_names = [[]]
         led_vim_colors = []
@@ -105,8 +108,10 @@ class OpenRGBNvim(object):
             for i, rgb_color in enumerate(led_rgb_colors):
                 for c in self.led_names_to_ids(led_names[i]):
                     self.device.colors[c] = rgb_color
-            # show
-            self.device.show()
+            # show only most recent thread
+            if my_th_cnt >= self.th_cnt:
+                self.device.show(fast=True)
+        self.th_cnt -= 1
 
     @pynvim.function('OpenRGBChangeColorFromMode')
     def change_color_from_mode(self, args):
