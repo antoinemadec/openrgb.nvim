@@ -82,12 +82,8 @@ class OpenRGBNvim(object):
         self.th_cnt += 1
         my_th_cnt = self.th_cnt
         vim_color = args[0]
-        led_names = [[]]
-        led_vim_colors = []
-        if len(args) > 1:
-            led_names = args[1]
-        if len(args) > 2:
-            led_vim_colors = args[2]
+        led_names = args[1] if len(args) > 1 else [[]]
+        led_vim_colors = args[2] if len(args) > 2 else []
         # fill led_rgb_colors
         led_rgb_colors = []
         if len(led_names):
@@ -120,4 +116,5 @@ class OpenRGBNvim(object):
             return
         self.prev_vim_mode = vim_mode
         d = self.mode_dict.get(vim_mode, self.mode_dict['default'])
-        self.change_color([d['vim_color'], d['led_names'], d['led_vim_colors']])
+        self.change_color(
+            [d['vim_color'], d['led_names'], d['led_vim_colors']])
