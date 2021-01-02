@@ -84,6 +84,7 @@ class OpenRGBNvim(object):
         vim_color = args[0]
         led_names = args[1] if len(args) > 1 else [[]]
         led_vim_colors = args[2] if len(args) > 2 else []
+        force = args[3] if len(args) > 3 else False
         # fill led_rgb_colors
         led_rgb_colors = []
         if len(led_names):
@@ -106,15 +107,16 @@ class OpenRGBNvim(object):
                     self.device.colors[c] = rgb_color
             # show only most recent thread
             if my_th_cnt >= self.th_cnt:
-                self.device.show(fast=True)
+                self.device.show(fast=True, force=force)
         self.th_cnt -= 1
 
     @pynvim.function('OpenRGBChangeColorFromMode')
     def change_color_from_mode(self, args):
         vim_mode = args[0]
-        if vim_mode == self.prev_vim_mode:
+        force = args[1] if len(args) > 1 else False
+        if not force and vim_mode == self.prev_vim_mode:
             return
         self.prev_vim_mode = vim_mode
         d = self.mode_dict.get(vim_mode, self.mode_dict['default'])
         self.change_color(
-            [d['vim_color'], d['led_names'], d['led_vim_colors']])
+            [d['vim_color'], d['led_names'], d['led_vim_colors'], force])
