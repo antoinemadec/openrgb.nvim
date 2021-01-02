@@ -7,7 +7,7 @@ let s:default_dict = {
       \ 'led_colors': []
       \ }
 let g:openrgb_mode_dict = {}
-for mode in ['n', 'v', 'V', '', 'i', 'R', 'c', 't', 'default']
+for mode in ['n', 'v', 'V', '', 'i', 'R', 'c', 'r', 't', 'default']
   let g:openrgb_mode_dict[mode] = copy(s:default_dict)
 endfor
 

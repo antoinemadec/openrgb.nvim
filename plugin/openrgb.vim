@@ -23,7 +23,7 @@ if !exists("g:openrgb_mode_dict")
     \ 'led_colors': []
     \ }
   let g:openrgb_mode_dict = {}
-  for mode in ['n', 'v', 'V', '', 'i', 'R', 'c', 't', 'default']
+  for mode in ['n', 'v', 'V', '', 'i', 'R', 'c', 'r', 't', 'default']
     let g:openrgb_mode_dict[mode] = copy(s:default_dict)
   endfor
 
@@ -58,6 +58,7 @@ if !exists("g:openrgb_mode_dict")
   " -- command
   let g:openrgb_mode_dict['c']['main_color'] = '#a89984'
   let g:openrgb_mode_dict['c']['led_names'] = [s:keys_arrow + s:keys_special]
+  let g:openrgb_mode_dict['r'] = g:openrgb_mode_dict['c']
   " -- terminal
   let g:openrgb_mode_dict['t']['main_color'] = '#b8bb26'
   let g:openrgb_mode_dict['t']['led_names'] = [s:keys_arrow + s:keys_special]
