@@ -29,3 +29,5 @@ function MyMode() abort
   endif
   return lightline#mode()
 endfunction
+
+autocmd FocusGained * call OpenRGBChangeColorFromMode(mode(), 1)
