@@ -119,4 +119,4 @@ class OpenRGBNvim(object):
         self.prev_vim_mode = vim_mode
         d = self.mode_dict.get(vim_mode, self.mode_dict['default'])
         self.change_color(
-            [d['vim_color'], d['led_names'], d['led_vim_colors'], force])
+            [d['main_color'], d['led_names'], d['led_colors'], force])
