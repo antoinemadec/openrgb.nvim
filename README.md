@@ -10,6 +10,7 @@ Fast and asynchronous plugin to live your vim-life to the fullest.
 ## Why?
 
 - 🚀 **Fast**: snappy and completely asynchronous
+- 💎 **Reliable**: multiple vim instances are supported
 - 🌍 **Universal**: works with all devices supported by [OpenRGB][OpenRGB]
 - ❤️ **Flexible**: each mode's colors are customizable
 
