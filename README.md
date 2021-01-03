@@ -11,7 +11,7 @@ Fast and asynchronous plugin to live your vim-life to the fullest.
 
 - 🚀 **Fast**: snappy and completely asynchronous
 - 🌍 **Universal**: works with all devices supported by [OpenRGB][OpenRGB]
-- ❤️ **Flexible**: each mode RGB colors are customizable
+- ❤️ **Flexible**: each mode's colors are customizable
 
 ## Installation
 
@@ -40,10 +40,12 @@ function OpenRGBStatuslineFunc()
   endif
   return ''
 endfunction
+
 if empty(&statusline)
   set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 endif
 set statusline+=%{OpenRGBStatuslineFunc()}
+
 autocmd FocusGained * call OpenRGBChangeColorFromMode(mode(), 1)
 ```
   - if you use [lightline][lightline], add this in your **vimrc**:
@@ -63,6 +65,7 @@ let g:lightline.inactive = {
 let g:lightline.tabline = {
       \ 'left': [ [ 'tabs' ] ],
       \ 'right': [ [ 'close' ] ] }
+
 " openrgb modifications
 let g:lightline.active.left[0][0] = 'mymode'
 let g:lightline.component_function = {'mymode': 'MyMode'}
@@ -88,6 +91,7 @@ let g:openrgb_mode_dict = {}
 for mode in ['n', 'v', 'V', '', 'i', 'R', 'c', 'r', 't', 'default']
   let g:openrgb_mode_dict[mode] = copy(s:default_dict)
 endfor
+
 " customize dict:
 "     - if dict[mode] is not found, it falls back to dict['default']
 "     - each group of keys in 'led_names' are lit using the same color
