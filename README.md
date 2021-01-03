@@ -3,6 +3,10 @@
 Change your RGB devices' color depending on Neovim's mode.\
 Fast and asynchronous plugin to live your vim-life to the fullest.
 
+| ![](https://raw.githubusercontent.com/antoinemadec/gif/master/openrgb/normal_custom.jpg) | ![](https://raw.githubusercontent.com/antoinemadec/gif/master/openrgb/insert_default.jpg) |
+|:---:|:---:|
+| ![](https://raw.githubusercontent.com/antoinemadec/gif/master/openrgb/normal_default.jpg) | ![](https://raw.githubusercontent.com/antoinemadec/gif/master/openrgb/visual_default.jpg) |
+
 ## Why?
 
 - 🚀 **Fast**: snappy and completely asynchronous
@@ -85,6 +89,7 @@ for mode in ['n', 'v', 'V', '', 'i', 'R', 'c', 'r', 't', 'default']
   let g:openrgb_mode_dict[mode] = copy(s:default_dict)
 endfor
 " customize dict:
+"     - if dict[mode] is not found, it falls back to dict['default']
 "     - each group of keys in 'led_names' are lit using the same color
 "     - look at 'g:openrgb_led_names' to see the available 'led_names'
 "     - if empty(led_colors):
@@ -115,6 +120,14 @@ let g:openrgb_mode_dict['i']['led_colors'] = [
       \ '#ffffff',
       \ '#ff0000'
       \ ]
+```
+
+Here is the API if you want to trigger color changes manually:
+```vim
+" calling OpenRGBChangeColor() using 'g:openrgb_mode_dict' info
+OpenRGBChangeColorFromMode(mode, force)
+" calling OpenRGBChangeColor() directly
+call OpenRGBChangeColor(main_color, led_names, led_colors, force)
 ```
 
 ## License
