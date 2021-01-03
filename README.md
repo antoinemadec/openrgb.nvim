@@ -9,9 +9,9 @@ Fast and asynchronous plugin to live your vim-life to the fullest.
 
 ## Why?
 
+- 🌍 **Universal**: works with all [devices supported][supported_devices] by [OpenRGB][OpenRGB]
 - 🚀 **Fast**: snappy and completely asynchronous
 - 💎 **Reliable**: multiple vim instances are supported
-- 🌍 **Universal**: works with all devices supported by [OpenRGB][OpenRGB]
 - ❤️ **Flexible**: each mode's colors are customizable
 
 ## Installation
@@ -139,6 +139,7 @@ call OpenRGBChangeColor(main_color, led_names, led_colors, force)
 
 MIT
 
-[OpenRGB]:        https://gitlab.com/CalcProgrammer1/OpenRGB
-[openrgb-python]: https://github.com/jath03/openrgb-python
-[lightline]:      https://github.com/itchyny/lightline.vim
+[OpenRGB]:           https://gitlab.com/CalcProgrammer1/OpenRGB
+[supported_devices]: https://gitlab.com/CalcProgrammer1/OpenRGB/-/wikis/Supported-Devices
+[openrgb-python]:    https://github.com/jath03/openrgb-python
+[lightline]:         https://github.com/itchyny/lightline.vim
