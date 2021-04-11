@@ -55,17 +55,7 @@ autocmd FocusGained * call OpenRGBChangeColorFromMode(mode(), 1)
 let g:lightline = {}
 let g:lightline.active = {
       \ 'left': [ [ 'mode', 'paste' ],
-      \           [ 'readonly', 'filename', 'modified' ] ],
-      \ 'right': [ [ 'lineinfo' ],
-      \            [ 'percent' ],
-      \            [ 'fileformat', 'fileencoding', 'filetype' ] ] }
-let g:lightline.inactive = {
-      \ 'left': [ [ 'filename' ] ],
-      \ 'right': [ [ 'lineinfo' ],
-      \            [ 'percent' ] ] }
-let g:lightline.tabline = {
-      \ 'left': [ [ 'tabs' ] ],
-      \ 'right': [ [ 'close' ] ] }
+      \           [ 'readonly', 'filename', 'modified' ] ]}
 
 " openrgb modifications
 let g:lightline.active.left[0][0] = 'mymode'
