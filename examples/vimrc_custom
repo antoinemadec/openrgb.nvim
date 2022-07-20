@@ -1,4 +1,4 @@
-source vimrc_setup_default
+source vimrc_setup
 
 " default dict
 let s:default_dict = {

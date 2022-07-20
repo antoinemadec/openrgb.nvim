@@ -33,40 +33,12 @@ openrgb --server
 ```
 
 And add the folowing in your **vimrc** :
-  - if you don't use any **statusline** plugin, add this in your **vimrc**:
 ```vim
-function OpenRGBStatuslineFunc()
-  if g:openrgb_is_ready
-    call OpenRGBChangeColorFromMode(mode())
-  endif
-  return ''
-endfunction
-
-if empty(&statusline)
-  set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
-endif
-set statusline+=%{OpenRGBStatuslineFunc()}
-
-autocmd FocusGained * call OpenRGBChangeColorFromMode(mode(), 1)
-```
-  - if you use [lightline][lightline], add this in your **vimrc**:
-```vim
-" default lightline values
-let g:lightline = {}
-let g:lightline.active = {
-      \ 'left': [ [ 'mode', 'paste' ],
-      \           [ 'readonly', 'filename', 'modified' ] ]}
-
-" openrgb modifications
-let g:lightline.active.left[0][0] = 'mymode'
-let g:lightline.component_function = {'mymode': 'MyMode'}
-function MyMode() abort
-  if g:openrgb_is_ready
-    call OpenRGBChangeColorFromMode(mode())
-  endif
-  return lightline#mode()
-endfunction
-autocmd FocusGained * call OpenRGBChangeColorFromMode(mode(), 1)
+augroup openrgb
+  autocmd!
+  autocmd ModeChanged *:* call OpenRGBChangeColorFromMode(mode())
+  autocmd FocusGained,UIEnter * call OpenRGBChangeColorFromMode(mode(), 1)
+augroup end
 ```
 
 ## Customization

@@ -1,0 +1,5 @@
+augroup openrgb
+  autocmd!
+  autocmd ModeChanged *:* call OpenRGBChangeColorFromMode(mode())
+  autocmd FocusGained,UIEnter * call OpenRGBChangeColorFromMode(mode(), 1)
+augroup end
