@@ -16,7 +16,6 @@ class OpenRGBNvim(object):
         self.is_connected = False
         self.connection_failed = False
         self.led_names = []
-        self.prev_vim_mode = ''
         self.th_cnt = 0
         # vim variables
         self.vim.vars['openrgb_connection_failed'] = False
@@ -120,9 +119,6 @@ class OpenRGBNvim(object):
         vim_mode = args[0]
         force = args[1] if len(args) > 1 else False
         brightness = args[2] if len(args) > 2 else False
-        if not force and vim_mode == self.prev_vim_mode:
-            return
-        self.prev_vim_mode = vim_mode
         d = self.mode_dict.get(vim_mode, self.mode_dict['default'])
         self.change_color(
             [d['main_color'], d['led_names'], d['led_colors'], force, brightness])
