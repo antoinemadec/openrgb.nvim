@@ -36,13 +36,31 @@ And add the folowing in your **vimrc** :
 ```vim
 augroup openrgb
   autocmd!
-  autocmd ModeChanged *:* call OpenRGBChangeColorFromMode(mode())
-  autocmd FocusGained,UIEnter * call OpenRGBChangeColorFromMode(mode(), 1)
+  autocmd ModeChanged *:* call OpenRGBChangeColorFromMode(mode(), 0, 255)
+  autocmd FocusGained,UIEnter * call OpenRGBChangeColorFromMode(mode(), 1, 255)
+  autocmd FocusLost * call OpenRGBClearColor()
 augroup end
 ```
 
 ## Customization
-If you don't like the default RGB colors, here is how to change it:
+### API
+```vim
+" change colors using 'g:openrgb_mode_dict' info:
+"   mode: vim mode, used as 'g:openrgb_mode_dict' key
+"   force: optional, force OpenRGB to set all leds
+"   brightness: optional, in [0:255], force color brightness
+OpenRGBChangeColorFromMode(mode, force, brightness)
+
+" change colors directly
+"   main_color: main vim format color
+"   led_names: optional, list of lists of led name, each list correspond to a color group
+"   led_colors: optional, list of vim_colors, one color per color group (or none for automatic color)
+"   force: optional, force OpenRGB to set all leds
+"   brightness: optional, in [0:255], force color brightness
+call OpenRGBChangeColor(main_color, led_names, led_colors, force, brightness)
+```
+
+### Change Default Colors
 ```vim
 " default dict
 let s:default_dict = {
@@ -87,14 +105,6 @@ let g:openrgb_mode_dict['i']['led_colors'] = [
       \ '#ffffff',
       \ '#ff0000'
       \ ]
-```
-
-Here is the API if you want to trigger color changes manually:
-```vim
-" calling OpenRGBChangeColor() using 'g:openrgb_mode_dict' info
-OpenRGBChangeColorFromMode(mode, force)
-" calling OpenRGBChangeColor() directly
-call OpenRGBChangeColor(main_color, led_names, led_colors, force)
 ```
 
 ## License

@@ -29,15 +29,19 @@ class OpenRGBNvim(object):
         b = eval("0x" + vim_color[5:7])
         return (r, g, b)
 
-    def vim_color_to_rgb_color(self, vim_color):
-        return RGBColor(*self.vim_color_to_rgb(vim_color))
+    def vim_color_to_rgb_color(self, vim_color, brightness=False):
+        (r, g, b) = self.vim_color_to_rgb(vim_color)
+        if brightness is not False:
+            (h, s, _) = colorsys.rgb_to_hsv(r, g, b)
+            (r, g, b) = (int(x) for x in colorsys.hsv_to_rgb(h, s, brightness))
+        return RGBColor(r, g, b)
 
-    def get_complementary_rgb_colors(self, vim_color, nb_colors):
+    def get_complementary_rgb_colors(self, vim_color, nb_colors, brightness=False):
         crgbs = []
         (r, g, b) = self.vim_color_to_rgb(vim_color)
         (h, s, v) = colorsys.rgb_to_hsv(r, g, b)
         cs = max(s, 0.7)
-        cv = max(v, 128)
+        cv = max(v, 128) if brightness is False else brightness
         for i in range(nb_colors):
             j = i-1
             if j < 0:
@@ -85,20 +89,21 @@ class OpenRGBNvim(object):
         led_names = args[1] if len(args) > 1 else [[]]
         led_vim_colors = args[2] if len(args) > 2 else []
         force = args[3] if len(args) > 3 else False
+        brightness = args[4] if len(args) > 4 else False
         # fill led_rgb_colors
         led_rgb_colors = []
         if len(led_names):
             if len(led_vim_colors):
                 led_rgb_colors = [self.vim_color_to_rgb_color(
-                    vim_color) for vim_color in led_vim_colors]
+                    vim_color, brightness) for vim_color in led_vim_colors]
             else:
                 # choose led_rgb_colors automatically
                 led_rgb_colors = self.get_complementary_rgb_colors(
-                    vim_color, len(led_names))
+                    vim_color, len(led_names), brightness)
         self.connect()
         if self.is_connected:
             # main color
-            rgb_color = self.vim_color_to_rgb_color(vim_color)
+            rgb_color = self.vim_color_to_rgb_color(vim_color, brightness)
             for c in range(len(self.device.colors)):
                 self.device.colors[c] = rgb_color
             # led colors
@@ -114,9 +119,14 @@ class OpenRGBNvim(object):
     def change_color_from_mode(self, args):
         vim_mode = args[0]
         force = args[1] if len(args) > 1 else False
+        brightness = args[2] if len(args) > 2 else False
         if not force and vim_mode == self.prev_vim_mode:
             return
         self.prev_vim_mode = vim_mode
         d = self.mode_dict.get(vim_mode, self.mode_dict['default'])
         self.change_color(
-            [d['main_color'], d['led_names'], d['led_colors'], force])
+            [d['main_color'], d['led_names'], d['led_colors'], force, brightness])
+
+    @pynvim.function('OpenRGBClearColor')
+    def clear_color(self, args):
+        self.device.clear()
